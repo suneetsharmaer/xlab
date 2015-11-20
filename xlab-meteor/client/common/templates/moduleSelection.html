@@ -1,0 +1,15 @@
+<template name='moduleSelection'>
+    <div class="large-12 columns">
+        <div class="row">
+            {{#each moduleList}}
+            <div class="large-4 small-6 columns">
+                <img src={{thumbnail}}>
+                <div class="panel">
+                    <a href="#" id={{id}} name={{name}} class="explore radius button">Explore</a>
+                    <h2>{{name}}</h2>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>    
+</template>

@@ -1,0 +1,312 @@
+<!-- 
+1. fix adding to effect (checking if the function save_dict require previous insertion into dictstack)
+3. the movie should be same size as controllers
+4. save functions. 
+5. add functions.
+5.a need to change all #select-result to currentSelection
+6. there is a place in main.js which color = color * 256;
+6. edit functions. -->
+<template name="orchestration">
+  <link href="stylesheets/jquery.selectbox.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="lib/jquery.selectbox-0.2.js"></script>  
+  <script type="text/javascript" src="lib/jquery.ui.touch-punch.min.js"></script>  
+
+  <span id="chromeFix"></span>
+
+
+  <body >
+  <div id="mtitle" class="bright">Matrix Sample Movie</div>
+   <div id="Panel" style="height:45%; max-height:600px; overflow:hidden;" >
+
+    <table id="mainContent" border="0" cellpadding="0" cellspacing="0" style="border:none;height:100%; ">
+      <tr>
+        <td style="background-color:#1a191b; padding:20px 0; text-align:center;" valign="top" >
+          <div id="loadvideo" style="display:none; border:none;">
+            url:
+            <input type="text" class = "input name" id="loadvideourl">
+            name:
+            <input type="text" class = "input name" id="loadvideoname">
+            <a class="button tiny" id = "loadvideobutton">Load Video</a>
+          </div>
+
+         <!--  <div class="flex-video" id="videoContent" style="padding:0; margin:0px; height:350px;"> -->
+            <video id="videoId"  controls="true" style="height:50%; margin:0px;  padding:0;" type='video/mp4'>
+              <source src="https://s3.amazonaws.com/xlab-media/matrixClip.mp4" type="video/mp4">
+              </video>
+            <!-- </div> -->
+            <!--  <a class="button tiny" id = "changeVideo">Change Video</a> -->
+
+          </td>
+          <td width="2"  style="background-color:#000;"></td>
+
+          <td id="OcontrolPanel" width="50%" valign="top">
+           <!--  <div id="effectFactoryPanel" style="width:250px; display:none; " >
+              <div class="panel-heading">
+              </div>
+              <div style="background-color:none; margin: 20px 0;">
+                <div id="Addressable_Duration">
+                 <input type="text" id="neweffect" name="neweffect" class="input name cp_select" value="New Name" onclick="this.value=''">
+                  <label>Addressable</label>
+                  <div id="addr_duration" class="ui-widget-content" >
+                    <h3 class="ui-widget-header"></h3>
+                  </div>
+                  <input type="text" id="input_addr_duration">
+                </div>
+                <table  width="200" height="80"  id="addr_tbl">
+                  <tr valign="top" >
+                    <td>
+                      <table class="cp_grey_tbl">
+                        <tr style="background-color:none;">
+                          <td class="cp_innertd">
+                           <div id="Addressable_Pattern" class="inline cp_select">
+                            <select name="addr_pattern" id="addr_pattern" tabindex="2"  class="cp_select" >
+                              <option selected="selected" style="background-color:none;">Pattern</option>
+                              <option style="background-color:none;">wave</option>
+                              <option style="background-color:none;">flash</option>
+                              <option style="background-color:none;">flow</option>
+                            </select>
+                          </div>
+                        </td>
+                        <td class="cp_innertd">
+                          <div id = "Addressable_Color" class="inline cp_select"  >
+                           <select name="addr_color" id="addr_color" tabindex="1"  class="cp_select">
+                            <option>Color</option>
+                            <option>red</option>
+                            <option>green</option>
+                            <option>blue</option>
+                            <option>white</option>
+                            <option>orange</option>
+                            <option>violet</option>
+                            <option>indigo</option>
+                            <option>pink</option>
+                          </select>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                     <td class="cp_innertd">
+                       <div id = "Addressable_Direction" class="inline cp_select">
+                         <select name="direction" id="direction"  class="cp_select">
+                          <option>Direction</option>
+                          <option>top</option>
+                          <option>bottom</option>
+                          <option>right</option>
+                          <option>left</option>
+                        </select>
+                      </div>
+                    </td>
+                    <td class="cp_innertd">
+                      <div id = "Addressable_Shape" class="inline cp_select" >
+                       <select name="shape" id="shape"  class="cp_select">
+                        <option>Shape</option>
+                        <option>X</option>
+                        <option>L</option>
+                        <option>A</option>
+                        <option>B</option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+     
+        <table class="cp_grey_tbl colortable">
+          <tr>
+            <td><input type="text" class = "input effect cp_input" id="addr_red" onfocus="this.value = ''"></td>
+            <td><input type="text" class = "input effect cp_input" id="addr_green" onfocus="this.value = ''"></td>
+            <td><input type="text" class = "input effect cp_input" id="addr_blue" onfocus="this.value = ''"></td>
+          </tr>
+        </table>
+
+        <div id = "Nonaddressable_Duration">
+              <label>&nbsp;&nbsp;&nbsp;Non-addressable</label>
+          <div id="nonAddr_duration" class="ui-widget-content">
+          <h3 class="ui-widget-header"></h3>
+          </div>
+          <input type="text" id="input_nonAddr_duration">
+        </div>
+        <table  width="100" height="40"  id="addr_tbl">
+          <tr valign="top" >
+            <td class="cp_innertd" >
+              <div id = "Nonaddressable_Pattern" class="inline cp_select" >
+                <select name="nonAddr_pattern" id="nonAddr_pattern"  class="cp_select">
+                  <option>none</option>
+                  <option>on</option>
+                  <option>flash</option>
+                  <option>dim</option>
+                </select>
+              </div>
+            </td>
+            <td class="cp_innertd">
+              <div id = "Nonaddressable_Color" class="inline cp_select" >
+                <select name="nonAddr_color" id="nonAddr_color"  class="cp_select">
+                  <option>none</option>
+                  <option>red</option>
+                  <option>green</option>
+                  <option>blue</option>
+                  <option>white</option>
+                  <option>orange</option>
+                  <option>violet</option>
+                  <option>indigo</option>
+                  <option>pink</option>
+                </select>
+              </div>
+
+            </td>
+          </tr>
+        </table>
+   
+      <table class="cp_grey_tbl colortable">
+          <tr>
+              <td><input type="text" class = "input effect cp_input"  id="nonAddr_red" onfocus="this.value = ''"></td>
+              <td><input type="text" class = "input effect cp_input" id="nonAddr_green" onfocus="this.value = ''"></td>
+              <td><input type="text" class = "input effect cp_input" id="nonAddr_blue" onfocus="this.value = ''"></td>
+           </tr>
+      </table>
+      <br/><br/>
+      <div class="cp_cfrm_btn" >
+        <div class="button cp_btn" id="test_effect">Test</div>
+        <div class="button cp_btn" id="save_dict">Done</div>
+        <div class="button cp_btn" id="cancel">Cancel</div>
+      </div>
+    </div>
+  </div>   -->
+
+
+  <div id="cp_organizer">
+      <div id="effet_list_wrapper"><select name="effect_list" id="effect_list" tabindex="1" >
+              <option value="">Effects --</option>
+          <!--     <optgroup label="Type I"> -->
+                <option value="1">Kick</option>
+                <option value="9">Fight</option>
+          <!--     </optgroup> -->
+              <!-- <optgroup label="Type II"> -->
+                <option value="2">Blink</option>
+                <option value="3">Fade</option>
+              <!-- </optgroup> -->
+            </select>
+        </div>
+  </div>
+  <div id="presets">
+      <a href="javascript:void(0);"><img src="images/p1.png"></a>
+      <a href="javascript:void(0);"><img src="images/p2.png"></a>
+      <a href="javascript:void(0);"><img src="images/p3.png"></a><br><br>
+      <a href="javascript:void(0);"><img src="images/p4.png"></a>
+      <a href="javascript:void(0);"><img src="images/p5.png"></a>
+      <a href="javascript:void(0);"><img src="images/p6.png"></a>
+  </div>
+</td>
+</tr>
+
+</table>
+</div>
+  <!-- <div class="col" id="col1">
+    <div class=" panel panel-primary o_panel" id="videoPanel">
+      <h2 class="o_heading">Video Content</h2>
+      <div class="panel-body">
+    
+      </div>
+    </div>
+     <div class="col" id="col2">
+      <div id="videoControl" class="panel panel-primary o_panel">
+        <h2 class="o_heading">Video Control</h2>
+        <div class="panel-body o_content" >
+          <a class="button tiny" id = "play">Play</a>
+          <a class="button tiny" id = "pause">Pause</a>
+          <a class="button tiny" id = "volume_up">Increase Volume</a>
+          <a class="button tiny" id = "volumn_down">Decrease Volume</a>
+          <a class="button tiny" id = "stop">Stop</a>
+          <a id="loadData" class="button tiny">Load Data</a>
+          <a id="saveData" class="button tiny">Save Data</a>
+          <a id="deployData" class="button tiny">Deploy Data</a>
+        </div>
+      </div>
+    </div>  -->
+    <!-- <div class="col" id="col3">
+      <div id="controlPanel" class="panel panel-primary o_panel" >
+        <h2 class="o_heading">Control Panel</h2>
+        <div class="panel-body o_content">
+
+            <table>
+              <tr valign="top">
+               <td>
+                <table class="cp_select">
+                  <tr>
+                    <td>
+                      <div id="effectListWrapper">
+                       <p id="selectfeedback"><span>You've selected:</span> <span id="select-result">none</span>.</p>
+                       <div id="effectlist"><ol id="selecteffect"></ol>
+                       </div>
+                     </div>
+                   </td>
+                 </tr>
+               </table>
+             </td>
+             <td>
+              <div id="controllist" class="cp_main_subdiv">
+                <a class="button tiny" id="effectFactory">Effect Factory</a>
+                <a class="button tiny" id="addTotimeline">Add to Timeline</a>
+                <a class="button tiny" id="removeFromtimeline">Remove from Timeline</a>
+                <a class="button tiny" id="removeEffect">Remove Effect</a>
+
+                <a class="button tiny" id="changeName">Change Name</a>
+                <a class="button tiny" id="removeDict">Remove from Dictionary</a>
+              </div>
+            </td>
+            <td>
+            <div class="cp_main_subdiv">
+             <input type="text" id="neweffect" class = "input name">
+             <a class="button tiny" id="addEffect">Add New Effect</a>
+             </div>
+           </td>
+         </tr>
+       </table>
+
+   </div>
+ </div>bhb
+
+</div>  end of control panel--> 
+
+
+
+<!-- this the main canvas-->
+
+<!-- this is the effect time line-->
+<!--  <div id="effecttimelines"></div> -->
+<div id="middleNavi">
+<table width="100%">
+  <tr>
+    <td>
+     <img src="images/change_btn.png">
+     <img src="images/save_btn.png">
+    <!-- <a href="javascript:void(0)" id="deployData">  --><img src="images/export_btn.png"><!-- </a> -->
+    </td>
+    <td width="50%">
+
+    </td>
+  </tr>
+</table>
+ <!--  <a href="javascript:void(0)"  id="loadData">Load Data</a> -->
+
+</div>
+<div id="MainTimeLineFooter" style="width:100%;">
+  <table width="100%" cellspacing="0" cellpadding="0">
+    <tr>
+      <td class="Mleft"><span  id="amount">00:00:00</span></td>
+      <td id="timecode_bar"><div id="time"></div><div id="slider"></div><div id="needle"></div></td>
+    </tr>
+    <tr>
+      <td class="Mleft_layer"><a href> add</a></td>
+      <td><div id="timelineContainer"> <div id="effecttimelines" style="margin:0px; width:100%;"></div></div></td>
+    </tr>
+  </table>
+
+
+
+</div>
+<!-- this the end of main canvas-->
+
+</body>
+</template>

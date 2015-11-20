@@ -1,0 +1,29 @@
+{
+  "name": "xlab-node",
+  "version": "0.1.0",
+  "description": "Module to interact with meteor cloud infrastructure",
+  "author": "Rishabh Gulati <rishabhsgulati@gmail.com>",
+  "contributors": [{
+    "name": "Rishabh Gulati",
+    "email": "rishabhsgulati@gmail.com"
+  }],
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mlab/xlab-NetworkArch/xlab-node"
+  },
+  "keywords": [
+    "meteor",
+    "publish subscribe",
+    "ddp",
+    "ddp-login"
+  ],
+  "dependencies": {
+    "ddp-login": "~1.0.5",
+    "ddp": "~0.9.1"
+  },
+  "private": true
+}

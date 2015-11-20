@@ -1,0 +1,38 @@
+<!-- <template name='eventDisplay'>
+      <div class="row">
+         <div class="large-12 columns">
+            <div class="tagline">
+               <h3>Events</h3>
+            </div>
+            <table id="metadataTable">
+               <thead>
+                  <tr>
+                     <th width="250">Event ID</th>
+                     <th width="250">Event Type</th>
+                     <th width="250">Action</th>
+                     <th width="250">Event Time</th>
+                  </tr>
+               </thead>
+               <tbody id="metadataTableBody">                 
+               </tbody>
+            </table>
+         </div>
+      </div>  
+</template> -->
+
+
+<template name='eventDisplay'>
+<div class="large-12 columns">
+   <div class="row">
+      {{#each adList}}                  
+      <div class="large-4 small-6 columns">
+         <img src={{location}}>
+         <div class="panel">
+               <a href={{url}} class="radius button">Shop</a>
+               <h5>{{name}}</h5>                              
+         </div>
+      </div>
+     {{/each}}
+   </div>   
+</div>
+</template>

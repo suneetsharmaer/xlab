@@ -1,0 +1,32 @@
+<template name='videoDetails'>
+    <div class="row">
+        <div class="large-12 columns">
+            <h5>{{moduleName}}</h5>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="large-12 columns">
+        <div class="row">
+            {{#each videoList}}
+            <div class="large-4 small-6 columns">
+                <img src={{thumbnail}}>
+                <div class="panel">
+                    <a href="#" id={{id}} videoSource={{videoSource}} metaSource={{metaSource}} name={{name}} class="play radius button">Play</a>
+                    <h2>{{name}}</h2>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-2 columns">.</div>
+        <div class="large-8 columns">
+            <ul class="stack-for-small round secondary button-group text-center">
+                <li><a href="#" id="screenSelection" class='button'>ScreenSelection</a></li>
+                <li><a href="#" id="home" class='button'>Home</a></li>
+            </ul>
+        </div>
+        <div class="large-2 columns">.</div>
+    </div>    
+</template>
